@@ -50,6 +50,8 @@ The `InteractionState` has a `resolve` method to easily choose a value based on 
 
 The `resolve` method takes a default value and optional values for `hovered`, `pressed`, and `deactivated` states. It returns the value that corresponds to the current state.
 
+The `deactivated` state is triggered when the `onTap` callback is `null`.
+
 ```dart
 color: state.resolve(
   Colors.blue, // Default color
