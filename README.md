@@ -53,10 +53,13 @@ The `resolve` method takes a default value and optional values for `hovered`, `p
 The `deactivated` state is triggered when the `onTap` callback is `null`.
 
 ```dart
-color: state.resolve(
-  Colors.blue, // Default color
-  hovered: Colors.lightBlue,
-  pressed: Colors.blueAccent,
-  deactivated: Colors.grey,
+Container(
+    color: state.resolve(
+        Colors.blue, // Default color
+        hovered: Colors.lightBlue,
+        pressed: Colors.blueAccent,
+        deactivated: Colors.grey,
+    ),
+    child: const Text('Click Me'),
 )
 ```
