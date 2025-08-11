@@ -14,32 +14,25 @@ A Flutter widget that simplifies building interactive UI elements by providing t
 import 'package:flutter/material.dart';
 import 'package:interactive_builder/interactive_builder.dart';
 
-class MyInteractiveWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return InteractiveBuilder(
+...
+    InteractiveBuilder(
       onTap: () {
         print('Tapped!');
       },
-      builder: (context, state, child) {
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: state.resolve(
-              Colors.blue,
-              hovered: Colors.lightBlue,
-              pressed: Colors.blueAccent,
-              deactivated: Colors.grey,
-            ),
-            borderRadius: BorderRadius.circular(10),
+      builder: (context, state, child) => Container(
+        decoration: BoxDecoration(
+          color: state.resolve(
+            Colors.blue,
+            hovered: Colors.lightBlue,
+            pressed: Colors.blueAccent,
+            deactivated: Colors.grey,
           ),
-          child: const Text('Click Me'),
-        );
-      },
-    );
-  }
-}
+        ),
+        child: const Text('Click Me'),
+      ),
+    )
+...
+
 ```
 
 ## `InteractionState`
