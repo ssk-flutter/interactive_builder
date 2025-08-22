@@ -9,13 +9,11 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+    title: 'Flutter Demo',
+    theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
+    home: const MyHomePage(title: 'Flutter Demo Home Page'),
+  );
 }
 
 class MyHomePage extends StatefulWidget {
@@ -44,34 +42,45 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.inversePrimary, title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-            const SizedBox(height: 20),
-            TextButton(onPressed: _toggleActive, child: Text(_isActive ? 'Deactivate' : 'Activate')),
-          ],
-        ),
-      ),
-      floatingActionButton: InteractiveBuilder(
-        onTap: _isActive ? _incrementCounter : null,
-        builder: (context, state, child) => AnimatedScale(
-          scale: state.resolve(1.0, pressed: 1.0, hovered: 1.1),
-          duration: const Duration(milliseconds: 200),
-          child: Material(
-            child: FloatingActionButton(
-              onPressed: null,
-              tooltip: state.resolve('Increment', deactivated: 'Activate me first!'),
-              child: const Icon(Icons.add),
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.inversePrimary, title: Text(widget.title)),
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: _toggleActive,
+            child: Text('Toggle Active State: ${_isActive ? 'Activated' : 'Deactivated'}'),
+          ),
+          const SizedBox(height: 20),
+          Text('Counter: $_counter', style: Theme.of(context).textTheme.headlineMedium),
+          const SizedBox(height: 20),
+          InteractiveBuilder(
+            onTap: _isActive ? () => setState(() => _counter = 0) : null,
+            builder: (context, state, child) => Text(
+              'Clear',
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                color: state.resolve(
+                  Colors.blue[300],
+                  hovered: Colors.blue[600]!,
+                  pressed: Colors.blue[900]!,
+                  deactivated: Colors.grey,
+                ),
+              ),
             ),
           ),
-        ),
+          const SizedBox(height: 20),
+          InteractiveBuilder(
+            onTap: _isActive ? _incrementCounter : null,
+            builder: (context, state, child) => AnimatedScale(
+              scale: state.resolve(1.0, pressed: 1.0, hovered: 1.1),
+              duration: const Duration(milliseconds: 200),
+              child: Padding(padding: const EdgeInsets.all(8.0), child: const Icon(Icons.add)),
+            ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
 }
