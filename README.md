@@ -19,6 +19,9 @@ import 'package:interactive_builder/interactive_builder.dart';
       onTap: () {
         print('Tapped!');
       },
+      onHover: (isHovering) {
+        print('Hovering: $isHovering');
+      },
       builder: (context, state, child) => Container(
         decoration: BoxDecoration(
           color: state.resolve(
