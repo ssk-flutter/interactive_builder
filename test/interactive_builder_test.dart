@@ -27,7 +27,7 @@ void main() {
 
     // Tap down
     final gesture = await tester.startGesture(tester.getCenter(find.byType(InteractiveBuilder)));
-    await tester.pump();
+    await tester.pumpAndSettle();
     expect(interactionState?.isPressed, isTrue);
 
     // Tap up

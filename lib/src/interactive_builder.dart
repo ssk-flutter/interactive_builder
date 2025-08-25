@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 part 'interactive_builder.part.dart';
 
@@ -25,11 +25,17 @@ class _InteractiveBuilderState extends State<InteractiveBuilder> {
       isPressed: _isPressed,
     );
 
-    return InkWell(
-      onTap: widget.onTap,
-      onHover: (hovering) => setState(() => _isHovering = hovering),
-      onHighlightChanged: (pressed) => setState(() => _isPressed = pressed),
-      child: widget.builder(context, currentState, widget.child),
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovering = true),
+      onExit: (_) => setState(() => _isHovering = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        onTapDown: (_) => setState(() => _isPressed = true),
+        onTapUp: (_) => setState(() => _isPressed = false),
+        onTapCancel: () => setState(() => _isPressed = false),
+        behavior: HitTestBehavior.opaque,
+        child: widget.builder(context, currentState, widget.child),
+      ),
     );
   }
 }
