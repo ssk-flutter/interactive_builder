@@ -95,4 +95,53 @@ void main() {
 
     expect(interactionState?.isDeactivated, isTrue);
   });
+
+  testWidgets('InteractiveBuilder calls onHover callback correctly',
+      (WidgetTester tester) async {
+    bool? lastHoverValue;
+    int hoverCallCount = 0;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: SizedBox(
+              width: 100,
+              height: 100,
+              child: InteractiveBuilder(
+                onTap: () {},
+                onHover: (isHovering) {
+                  lastHoverValue = isHovering;
+                  hoverCallCount++;
+                },
+                builder: (context, state, child) {
+                  return Container();
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Initial state - no callback called yet
+    expect(lastHoverValue, isNull);
+    expect(hoverCallCount, 0);
+
+    // Hover
+    final gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
+    await gesture.addPointer();
+    await gesture.moveTo(tester.getCenter(find.byType(InteractiveBuilder)));
+    await tester.pumpAndSettle();
+    
+    expect(lastHoverValue, isTrue);
+    expect(hoverCallCount, 1);
+
+    // Unhover
+    await gesture.moveTo(Offset.zero);
+    await tester.pumpAndSettle();
+    
+    expect(lastHoverValue, isFalse);
+    expect(hoverCallCount, 2);
+  });
 }

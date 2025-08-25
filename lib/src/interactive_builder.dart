@@ -3,10 +3,11 @@ import 'package:flutter/widgets.dart';
 part 'interactive_builder.part.dart';
 
 class InteractiveBuilder extends StatefulWidget {
-  const InteractiveBuilder({super.key, required this.builder, this.onTap, this.child});
+  const InteractiveBuilder({super.key, required this.builder, this.onTap, this.onHover, this.child});
 
   final InteractionStateBuilder builder;
   final GestureTapCallback? onTap;
+  final ValueChanged<bool>? onHover;
   final Widget? child;
 
   @override
@@ -26,8 +27,14 @@ class _InteractiveBuilderState extends State<InteractiveBuilder> {
     );
 
     return MouseRegion(
-      onEnter: (_) => setState(() => _isHovering = true),
-      onExit: (_) => setState(() => _isHovering = false),
+      onEnter: (_) {
+        setState(() => _isHovering = true);
+        widget.onHover?.call(true);
+      },
+      onExit: (_) {
+        setState(() => _isHovering = false);
+        widget.onHover?.call(false);
+      },
       child: GestureDetector(
         onTap: widget.onTap,
         onTapDown: (_) => setState(() => _isPressed = true),
