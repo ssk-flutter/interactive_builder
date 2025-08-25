@@ -27,14 +27,8 @@ class _InteractiveBuilderState extends State<InteractiveBuilder> {
     );
 
     return MouseRegion(
-      onEnter: (_) {
-        setState(() => _isHovering = true);
-        widget.onHover?.call(true);
-      },
-      onExit: (_) {
-        setState(() => _isHovering = false);
-        widget.onHover?.call(false);
-      },
+      onEnter: (_) => _onHoverChanged(true),
+      onExit: (_) => _onHoverChanged(false),
       child: GestureDetector(
         onTap: widget.onTap,
         onTapDown: (_) => setState(() => _isPressed = true),
@@ -44,5 +38,10 @@ class _InteractiveBuilderState extends State<InteractiveBuilder> {
         child: widget.builder(context, currentState, widget.child),
       ),
     );
+  }
+
+  void _onHoverChanged(bool isHovering) {
+    setState(() => _isHovering = isHovering);
+    widget.onHover?.call(isHovering);
   }
 }
