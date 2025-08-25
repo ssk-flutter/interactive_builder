@@ -58,6 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 20),
             InteractiveBuilder(
               onTap: _isActive ? () => setState(() => _counter = 0) : null,
+              onHover: (isHovering) => print('Clear button hovering: $isHovering'),
               builder: (context, state, child) => Text(
                 'Clear',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -73,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 20),
             InteractiveBuilder(
               onTap: _isActive ? _incrementCounter : null,
+              onHover: (isHovering) => print('Add button hovering: $isHovering'),
               builder: (context, state, child) => AnimatedScale(
                 scale: state.resolve(1.0, pressed: 1.0, hovered: 1.1),
                 duration: const Duration(milliseconds: 200),

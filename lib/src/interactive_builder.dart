@@ -3,10 +3,11 @@ import 'package:flutter/widgets.dart';
 part 'interactive_builder.part.dart';
 
 class InteractiveBuilder extends StatefulWidget {
-  const InteractiveBuilder({super.key, required this.builder, this.onTap, this.child});
+  const InteractiveBuilder({super.key, required this.builder, this.onTap, this.onHover, this.child});
 
   final InteractionStateBuilder builder;
   final GestureTapCallback? onTap;
+  final ValueChanged<bool>? onHover;
   final Widget? child;
 
   @override
@@ -14,20 +15,21 @@ class InteractiveBuilder extends StatefulWidget {
 }
 
 class _InteractiveBuilderState extends State<InteractiveBuilder> {
+  bool get _isDeactivated => widget.onTap == null;
   bool _isHovering = false;
   bool _isPressed = false;
 
   @override
   Widget build(BuildContext context) {
     final currentState = InteractionState(
-      isDeactivated: widget.onTap == null,
+      isDeactivated: _isDeactivated,
       isHovering: _isHovering,
       isPressed: _isPressed,
     );
 
     return MouseRegion(
-      onEnter: (_) => setState(() => _isHovering = true),
-      onExit: (_) => setState(() => _isHovering = false),
+      onEnter: (_) => _onHoverChanged(true),
+      onExit: (_) => _onHoverChanged(false),
       child: GestureDetector(
         onTap: widget.onTap,
         onTapDown: (_) => setState(() => _isPressed = true),
@@ -37,5 +39,11 @@ class _InteractiveBuilderState extends State<InteractiveBuilder> {
         child: widget.builder(context, currentState, widget.child),
       ),
     );
+  }
+
+  void _onHoverChanged(bool isHovering) {
+    if (_isDeactivated) return;
+    setState(() => _isHovering = isHovering);
+    widget.onHover?.call(isHovering);
   }
 }
