@@ -15,13 +15,14 @@ class InteractiveBuilder extends StatefulWidget {
 }
 
 class _InteractiveBuilderState extends State<InteractiveBuilder> {
+  bool get _isDeactivated => widget.onTap == null;
   bool _isHovering = false;
   bool _isPressed = false;
 
   @override
   Widget build(BuildContext context) {
     final currentState = InteractionState(
-      isDeactivated: widget.onTap == null,
+      isDeactivated: _isDeactivated,
       isHovering: _isHovering,
       isPressed: _isPressed,
     );
@@ -41,6 +42,7 @@ class _InteractiveBuilderState extends State<InteractiveBuilder> {
   }
 
   void _onHoverChanged(bool isHovering) {
+    if (_isDeactivated) return;
     setState(() => _isHovering = isHovering);
     widget.onHover?.call(isHovering);
   }
