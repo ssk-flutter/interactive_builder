@@ -48,7 +48,7 @@ class _DemoPageState extends State<DemoPage> {
                   }
                 : null,
             onHover: (isHovering) {
-              print('Button hovering: $isHovering');
+              debugPrint('Button hovering: $isHovering');
             },
             builder: (context, state, child) => Container(
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
@@ -64,7 +64,7 @@ class _DemoPageState extends State<DemoPage> {
                     ? null
                     : [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
+                          color: Colors.black.withValues(alpha: 0.2),
                           blurRadius: state.resolve(4.0, pressed: 2.0, hovered: 6.0),
                           offset: state.resolve(
                             const Offset(0, 2),
