@@ -10,79 +10,81 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-    title: 'Flutter Demo',
+    title: 'InteractiveBuilder Demo',
     theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
-    home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    home: const DemoPage(),
   );
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class DemoPage extends StatefulWidget {
+  const DemoPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<DemoPage> createState() => _DemoPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _DemoPageState extends State<DemoPage> {
   int _counter = 0;
-  bool _isActive = true;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void _toggleActive() {
-    setState(() {
-      _isActive = !_isActive;
-    });
-  }
+  bool _buttonEnabled = true;
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.inversePrimary, title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: _toggleActive,
-              child: Text('Toggle Active State: ${_isActive ? 'Activated' : 'Deactivated'}'),
-            ),
-            const SizedBox(height: 20),
-            Text('Counter: $_counter', style: Theme.of(context).textTheme.headlineMedium),
-            const SizedBox(height: 20),
-            InteractiveBuilder(
-              onTap: _isActive ? () => setState(() => _counter = 0) : null,
-              onHover: (isHovering) => print('Clear button hovering: $isHovering'),
-              builder: (context, state, child) => Text(
-                'Clear',
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: state.resolve(
-                    Colors.blue[300],
-                    hovered: Colors.blue[600]!,
-                    pressed: Colors.blue[900]!,
-                    deactivated: Colors.grey,
-                  ),
+    appBar: AppBar(
+      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      title: const Text('InteractiveBuilder Demo'),
+    ),
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text('Tap the button to increase counter:', style: TextStyle(fontSize: 18)),
+          const SizedBox(height: 20),
+          Text('$_counter', style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 40),
+          InteractiveBuilder(
+            onTap: _buttonEnabled
+                ? () {
+                    setState(() => _counter++);
+                  }
+                : null,
+            onHover: (isHovering) {
+              print('Button hovering: $isHovering');
+            },
+            builder: (context, state, child) => Container(
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              decoration: BoxDecoration(
+                color: state.resolve(
+                  Colors.blue,
+                  hovered: Colors.lightBlue,
+                  pressed: Colors.blueAccent,
+                  deactivated: Colors.grey,
                 ),
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: state.isDeactivated
+                    ? null
+                    : [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: state.resolve(4.0, pressed: 2.0, hovered: 6.0),
+                          offset: state.resolve(
+                            const Offset(0, 2),
+                            pressed: const Offset(0, 1),
+                            hovered: const Offset(0, 3),
+                          ),
+                        ),
+                      ],
+              ),
+              child: Text(
+                state.resolve('Tap Me!', deactivated: 'Disabled'),
+                style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
-            const SizedBox(height: 20),
-            InteractiveBuilder(
-              onTap: _isActive ? _incrementCounter : null,
-              onHover: (isHovering) => print('Add button hovering: $isHovering'),
-              builder: (context, state, child) => AnimatedScale(
-                scale: state.resolve(1.0, pressed: 1.0, hovered: 1.1),
-                duration: const Duration(milliseconds: 200),
-                child: Padding(padding: const EdgeInsets.all(8.0), child: const Icon(Icons.add)),
-              ),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 30),
+          Switch(value: _buttonEnabled, onChanged: (value) => setState(() => _buttonEnabled = value)),
+          Text(_buttonEnabled ? 'Button Enabled' : 'Button Disabled'),
+        ],
       ),
-    );
+    ),
+  );
 }
