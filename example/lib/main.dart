@@ -11,7 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
     title: 'InteractiveBuilder Demo',
-    theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
+    theme: ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    ),
     home: const DemoPage(),
   );
 }
@@ -37,9 +39,15 @@ class _DemoPageState extends State<DemoPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Tap the button to increase counter:', style: TextStyle(fontSize: 18)),
+          const Text(
+            'Tap the button to increase counter:',
+            style: TextStyle(fontSize: 18),
+          ),
           const SizedBox(height: 20),
-          Text('$_counter', style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold)),
+          Text(
+            '$_counter',
+            style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 40),
           InteractiveBuilder(
             onTap: _buttonEnabled
@@ -65,7 +73,11 @@ class _DemoPageState extends State<DemoPage> {
                     : [
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.2),
-                          blurRadius: state.resolve(4.0, pressed: 2.0, hovered: 6.0),
+                          blurRadius: state.resolve(
+                            4.0,
+                            pressed: 2.0,
+                            hovered: 6.0,
+                          ),
                           offset: state.resolve(
                             const Offset(0, 2),
                             pressed: const Offset(0, 1),
@@ -76,12 +88,19 @@ class _DemoPageState extends State<DemoPage> {
               ),
               child: Text(
                 state.resolve('Tap Me!', deactivated: 'Disabled'),
-                style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
           const SizedBox(height: 30),
-          Switch(value: _buttonEnabled, onChanged: (value) => setState(() => _buttonEnabled = value)),
+          Switch(
+            value: _buttonEnabled,
+            onChanged: (value) => setState(() => _buttonEnabled = value),
+          ),
           Text(_buttonEnabled ? 'Button Enabled' : 'Button Disabled'),
         ],
       ),

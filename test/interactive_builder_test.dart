@@ -4,8 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:interactive_builder/interactive_builder.dart';
 
 void main() {
-  testWidgets('InteractiveBuilder rebuilds with correct state on tap',
-      (WidgetTester tester) async {
+  testWidgets('InteractiveBuilder rebuilds with correct state on tap', (
+    WidgetTester tester,
+  ) async {
     InteractionState? interactionState;
 
     await tester.pumpWidget(
@@ -26,7 +27,9 @@ void main() {
     expect(interactionState?.isPressed, isFalse);
 
     // Tap down
-    final gesture = await tester.startGesture(tester.getCenter(find.byType(InteractiveBuilder)));
+    final gesture = await tester.startGesture(
+      tester.getCenter(find.byType(InteractiveBuilder)),
+    );
     await tester.pumpAndSettle();
     expect(interactionState?.isPressed, isTrue);
 
@@ -36,8 +39,9 @@ void main() {
     expect(interactionState?.isPressed, isFalse);
   });
 
-  testWidgets('InteractiveBuilder rebuilds with correct state on hover',
-      (WidgetTester tester) async {
+  testWidgets('InteractiveBuilder rebuilds with correct state on hover', (
+    WidgetTester tester,
+  ) async {
     InteractionState? interactionState;
 
     await tester.pumpWidget(
@@ -76,8 +80,9 @@ void main() {
     expect(interactionState?.isHovering, isFalse);
   });
 
-  testWidgets('InteractiveBuilder is deactivated when onTap is null',
-      (WidgetTester tester) async {
+  testWidgets('InteractiveBuilder is deactivated when onTap is null', (
+    WidgetTester tester,
+  ) async {
     InteractionState? interactionState;
 
     await tester.pumpWidget(
@@ -96,8 +101,9 @@ void main() {
     expect(interactionState?.isDeactivated, isTrue);
   });
 
-  testWidgets('InteractiveBuilder calls onHover callback correctly',
-      (WidgetTester tester) async {
+  testWidgets('InteractiveBuilder calls onHover callback correctly', (
+    WidgetTester tester,
+  ) async {
     bool? lastHoverValue;
     int hoverCallCount = 0;
 
@@ -133,14 +139,14 @@ void main() {
     await gesture.addPointer();
     await gesture.moveTo(tester.getCenter(find.byType(InteractiveBuilder)));
     await tester.pumpAndSettle();
-    
+
     expect(lastHoverValue, isTrue);
     expect(hoverCallCount, 1);
 
     // Unhover
     await gesture.moveTo(Offset.zero);
     await tester.pumpAndSettle();
-    
+
     expect(lastHoverValue, isFalse);
     expect(hoverCallCount, 2);
   });

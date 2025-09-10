@@ -6,7 +6,11 @@ part of 'interactive_builder.dart';
 /// provides a convenient [resolve] method to select values based on the current state.
 class InteractionState {
   /// Creates an [InteractionState] with the specified state flags.
-  const InteractionState({required this.isDeactivated, required this.isHovering, required this.isPressed});
+  const InteractionState({
+    required this.isDeactivated,
+    required this.isHovering,
+    required this.isPressed,
+  });
 
   /// Whether the widget is in a deactivated state.
   ///
@@ -60,4 +64,9 @@ class InteractionState {
 ///
 /// The builder receives the current [BuildContext], the [InteractionState]
 /// containing the current interaction state, and an optional [child] widget.
-typedef InteractionStateBuilder = Widget Function(BuildContext context, InteractionState state, Widget? child);
+typedef InteractionStateBuilder =
+    Widget Function(
+      BuildContext context,
+      InteractionState state,
+      Widget? child,
+    );

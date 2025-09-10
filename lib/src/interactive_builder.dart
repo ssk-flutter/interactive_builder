@@ -28,7 +28,13 @@ class InteractiveBuilder extends StatefulWidget {
   ///
   /// The [builder] parameter is required and will be called with the current
   /// interaction state whenever the state changes.
-  const InteractiveBuilder({super.key, required this.builder, this.onTap, this.onHover, this.child});
+  const InteractiveBuilder({
+    super.key,
+    required this.builder,
+    this.onTap,
+    this.onHover,
+    this.child,
+  });
 
   /// The builder function that creates the widget based on the interaction state.
   ///
