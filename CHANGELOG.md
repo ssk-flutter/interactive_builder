@@ -1,3 +1,10 @@
+## 0.2.1
+
+* **Enhanced Documentation** - Added comprehensive dartdoc comments to all public APIs
+* **Improved Demo App** - Created interactive showcase with visual state feedback
+* **Better pub.dev Score** - Achieved 100% documentation coverage and zero static analysis issues
+* **Fixed Deprecated APIs** - Updated to latest Flutter APIs (withValues instead of withOpacity)
+
 ## 0.2.0
 
 * **Added onHover callback** - Get notified when hover state changes

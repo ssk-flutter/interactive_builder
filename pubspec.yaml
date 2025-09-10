@@ -1,6 +1,6 @@
 name: interactive_builder
 description: "InteractiveBuilder to handle deactivated, hovered, pressed, states"
-version: 0.2.0
+version: 0.2.3
 repository: https://github.com/ssk-flutter/interactive_builder
 
 environment:
