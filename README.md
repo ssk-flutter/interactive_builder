@@ -2,6 +2,8 @@
 
 A Flutter widget that simplifies building interactive UI elements by providing the current interaction state to its builder.
 
+![Demo](interactive_builder_demo.gif)
+
 ## Features
 
 *   **Easy to Use:** Simply wrap your widget with `InteractiveBuilder` and use the provided state to customize your UI.
