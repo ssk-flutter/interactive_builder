@@ -2,8 +2,8 @@
 
 A Flutter widget that simplifies building interactive UI elements by providing the current interaction state to its builder.
 
-<p align="center">
-  <img src="https://github.com/ssk-flutter/interactive_builder/blob/main/interactive_builder_demo.gif" alt="Interactive Builder Demo" />
+<p>
+  <img src="https://github.com/ssk-flutter/interactive_builder/blob/main/interactive_builder_demo.gif?raw=true" alt="Interactive Builder Demo" />
 </p>
 
 ## Features
